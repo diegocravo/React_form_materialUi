@@ -2,7 +2,7 @@ import React from "react";
 import { TextField, Button, Switch, FormControlLabel } from "@material-ui/core";
 import { useState } from "react";
 
-function FormularioCadastro({validarCpf}) {
+function FormularioCadastro({TestaCPF}) {
   const [state, setState] = React.useState({
     promocoes: true,
     novidades: true,
@@ -52,7 +52,7 @@ function FormularioCadastro({validarCpf}) {
             setCpf(event.target.value)
         }}
         onBlur={(event) => {
-            const ehValido = validarCpf(cpf);
+            const ehValido = TestaCPF(cpf);
             setErros({cpf: ehValido})
         }}
         error={!erros.cpf.valido}

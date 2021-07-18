@@ -1,4 +1,4 @@
-import React, { Component, Fragment } from 'react';
+import React, { Component } from 'react';
 import './App.css';
 import FormularioCadastro from './components/FormularioCadastro/FormularioCadastro';
 // import 'fontsource-roboto';
@@ -12,18 +12,31 @@ class App extends Component {
         <Typography variant="h3" component="h1" align="center">
           Formulário de Cadastro
         </Typography>
-        <FormularioCadastro validarCpf={validarCpf} />
+        <FormularioCadastro TestaCPF={TestaCPF} />
       </Container>
     );
   }
 }
 
-function validarCpf(cpf) {
-  if (cpf.length !== 11) {
-    return {valido: false, texto: "CPF deve ter 11 dígitos"}
-  }else {
-    return {valido: true, texto: ""}
-  }
+function TestaCPF(strCPF) {
+    var Soma;
+    var Resto;
+    Soma = 0;
+  if (strCPF === "00000000000") return {valido: false, texto: "CPF inválido"};
+
+  for (var i=1; i<=9; i++) Soma = Soma + parseInt(strCPF.substring(i-1, i)) * (11 - i);
+  Resto = (Soma * 10) % 11;
+
+    if ((Resto == 10) || (Resto == 11))  Resto = 0;
+    if (Resto != parseInt(strCPF.substring(9, 10)) ) return {valido: false, texto: "CPF deve ter 11 dígitos"};
+
+  Soma = 0;
+    for (var i = 1; i <= 10; i++) Soma = Soma + parseInt(strCPF.substring(i-1, i)) * (12 - i);
+    Resto = (Soma * 10) % 11;
+
+    if ((Resto === 10) || (Resto === 11))  Resto = 0;
+    if (Resto !== parseInt(strCPF.substring(10, 11) ) ) return {valido: false, texto: "CPF inválido"};
+    return {valido: true, texto: ""};
 }
 
 export default App;
